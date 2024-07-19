@@ -1,5 +1,7 @@
+// This Java class represents a Company entity with fields like name, address, email, and industry type.
 package com.zero.JobPostApp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,7 +17,7 @@ public class Company {
     private String address;
     private String email;
     private String industryType;
-
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "company")
     private List<Job> jobs;
 }

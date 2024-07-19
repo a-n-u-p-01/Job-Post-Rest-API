@@ -31,6 +31,14 @@ public class JobController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    //get job by  company
+    @GetMapping("company/{id}")
+    public ResponseEntity<List<Job>> getJobByCompany(@PathVariable Long id){
+        if(!jobService.getJobByCompany(id).isEmpty()){
+            return new ResponseEntity<>(jobService.getJobByCompany(id),HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     //Create Job
     @PostMapping("/{companyId}")

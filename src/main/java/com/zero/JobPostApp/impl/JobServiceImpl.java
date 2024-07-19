@@ -4,6 +4,7 @@ import com.zero.JobPostApp.Entity.Job;
 import com.zero.JobPostApp.Repository.CompanyRepository;
 import com.zero.JobPostApp.Repository.JobRepository;
 import com.zero.JobPostApp.Services.JobService;
+import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -28,7 +29,18 @@ public class JobServiceImpl implements JobService {
     public Job getJobById(Long id){
         return jobRepository.findById(id).orElse(null);
     }
+    //get by company
+    @Override
+    public List<Job> getJobByCompany(Long id) {
+        Optional<Company> optionalCompany = companyRepository.findById(id);
+        if(optionalCompany.isPresent()){
+            return optionalCompany.get().getJobs();
+        }
+        return Collections.emptyList();
+    }
 
+
+    //delete by id
     @Override
     public boolean deleteJobById(Long id) {
         try {
@@ -51,12 +63,13 @@ public class JobServiceImpl implements JobService {
         return false;
     }
 
+
     //Create job
     @Override
     public boolean createJob(Job job, Long companyId){
         Optional<Company> optionalCompany = companyRepository.findById(companyId);
         if( optionalCompany.isPresent() && job!=null){
-            job.setCompanyName(optionalCompany.get().getName());
+            job.setCompany(optionalCompany.get());
             jobRepository.save(job);
             optionalCompany.get().getJobs().add(job);
             companyRepository.save(optionalCompany.get());
