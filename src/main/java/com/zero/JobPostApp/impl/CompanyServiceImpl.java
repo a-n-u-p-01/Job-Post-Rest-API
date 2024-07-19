@@ -1,18 +1,25 @@
 package com.zero.JobPostApp.impl;
 
 import com.zero.JobPostApp.Entity.Company;
+import com.zero.JobPostApp.Entity.Job;
 import com.zero.JobPostApp.Repository.CompanyRepository;
+import com.zero.JobPostApp.Repository.JobRepository;
 import com.zero.JobPostApp.Services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
     CompanyRepository companyRepository;
+    @Autowired
+    JobRepository jobRepository;
 
 
     @Override
@@ -48,6 +55,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public boolean deleteCompany(Long id) {
       if(getCompanyById(id) == null) return false;
+      jobRepository.findAll().stream().filter(job -> job.getCompany().getId().equals(id)).forEach(job -> jobRepository.deleteById(job.getId()));
       companyRepository.deleteById(id);
       return true;
     }
