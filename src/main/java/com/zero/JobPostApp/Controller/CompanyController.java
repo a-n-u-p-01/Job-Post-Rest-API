@@ -1,6 +1,8 @@
 package com.zero.JobPostApp.Controller;
 
 import com.zero.JobPostApp.Entity.Company;
+import com.zero.JobPostApp.Entity.JobApplication;
+import com.zero.JobPostApp.Services.CompanyService;
 import com.zero.JobPostApp.impl.CompanyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +15,17 @@ import java.util.List;
 @RequestMapping("/company")
 public class CompanyController {
     @Autowired
-    CompanyServiceImpl companyService;
+    CompanyService companyService;
 
 
     @GetMapping
     public ResponseEntity<List<Company>> getAllCompany(){
         List<Company> companyList = companyService.getAllCompany();
         return new ResponseEntity<>(companyList, HttpStatus.FOUND);
+    }
+    @GetMapping("/job-forms/{companyId}")
+    public ResponseEntity<List<JobApplication>> getAllJobApplication(@PathVariable Long companyId){
+        return new ResponseEntity<>(companyService.getAllJobApplication(companyId),HttpStatus.FOUND);
     }
 
     @GetMapping("{id}")
@@ -45,4 +51,11 @@ public class CompanyController {
     public  ResponseEntity<?> deleteCompany(@PathVariable Long id){
         return (companyService.deleteCompany(id) ?new ResponseEntity<>(HttpStatus.OK):new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
+
+    @GetMapping("approve-form/{applicationId}")
+    public ResponseEntity<?> approveApplication(@PathVariable Long applicationId){
+        companyService.approveApplication(applicationId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

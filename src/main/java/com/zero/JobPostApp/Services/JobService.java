@@ -10,10 +10,7 @@ public interface JobService {
     List<Job> getAllJobs();
     boolean createJob(Job job, Long companyId);
     Job getJobById(Long id);
-
     void deleteJobById(Long id);
-
     boolean updateJob(Job job, Long id);
-
     List<Job> getJobByCompany(Long id);
 }

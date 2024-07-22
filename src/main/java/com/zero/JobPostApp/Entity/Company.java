@@ -20,4 +20,10 @@ public class Company {
     @JsonIgnore
     @OneToMany(mappedBy = "company")
     private List<Job> jobs;
+    @JsonIgnore
+    @OneToMany(mappedBy = "companyId")
+    private List<Review> reviews;
+    @JsonIgnore
+    @OneToMany(mappedBy = "companyId")
+    private List<JobApplication> jobApplicationList;
 }

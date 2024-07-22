@@ -1,6 +1,7 @@
 package com.zero.JobPostApp.Services;
 
 import com.zero.JobPostApp.Entity.Company;
+import com.zero.JobPostApp.Entity.JobApplication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,4 +13,8 @@ public interface CompanyService {
     boolean addCompany(Company company);
     boolean updateCompany(Company company,Long id);
     boolean deleteCompany(Long id);
+
+    List<JobApplication> getAllJobApplication(Long companyId);
+
+    void approveApplication(Long applicationId);
 }

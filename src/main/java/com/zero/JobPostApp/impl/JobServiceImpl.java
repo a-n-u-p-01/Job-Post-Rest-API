@@ -51,7 +51,7 @@ public class JobServiceImpl implements JobService {
         Optional<Job> optionalJob = jobRepository.findById(id);
         if(optionalJob.isPresent()){
             job.setId(id);
-            jobRepository.save(job); // Id matched do not create new entry instead update existed one
+            jobRepository.save(job); //serialization// Id matched do not create new entry instead update existed one
             return true;
         }
         return false;
@@ -71,6 +71,4 @@ public class JobServiceImpl implements JobService {
         }
         return false;
     }
-
-
 }

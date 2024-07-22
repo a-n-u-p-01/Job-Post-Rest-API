@@ -2,12 +2,15 @@ package com.zero.JobPostApp.impl;
 
 import com.zero.JobPostApp.Entity.Company;
 import com.zero.JobPostApp.Entity.Job;
+import com.zero.JobPostApp.Entity.JobApplication;
 import com.zero.JobPostApp.Repository.CompanyRepository;
+import com.zero.JobPostApp.Repository.JobApplicationRepository;
 import com.zero.JobPostApp.Repository.JobRepository;
 import com.zero.JobPostApp.Services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -20,6 +23,8 @@ public class CompanyServiceImpl implements CompanyService {
     CompanyRepository companyRepository;
     @Autowired
     JobRepository jobRepository;
+    @Autowired
+    JobApplicationRepository jobApplicationRepository;
 
 
     @Override
@@ -31,6 +36,8 @@ public class CompanyServiceImpl implements CompanyService {
     public Company getCompanyById(Long id) {
         return companyRepository.findById(id).orElse(null);
     }
+
+
 
     @Override
     public boolean addCompany(Company company) {
@@ -59,4 +66,25 @@ public class CompanyServiceImpl implements CompanyService {
       companyRepository.deleteById(id);
       return true;
     }
+
+    @Override
+    public List<JobApplication> getAllJobApplication(Long companyId) {
+        Optional<Company> optionalCompany = companyRepository.findById(companyId);
+        if(optionalCompany.isPresent()){
+            return optionalCompany.get().getJobApplicationList();
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public void approveApplication(Long applicationId) {
+        Optional<JobApplication> optionalJobApplication = jobApplicationRepository.findById(applicationId);
+        if(optionalJobApplication.isPresent()){
+         JobApplication jobApplication =  optionalJobApplication.get();
+         jobApplication.setApplicationStatus(true);
+         jobApplicationRepository.save(jobApplication);
+        }
+
+    }
+
 }
