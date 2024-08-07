@@ -4,7 +4,6 @@ import com.zero.JobPostApp.Entity.JobApplication;
 import com.zero.JobPostApp.Entity.User;
 import com.zero.JobPostApp.Services.JobApplicationService;
 import com.zero.JobPostApp.Services.UserService;
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
