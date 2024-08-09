@@ -3,7 +3,6 @@ package com.zero.JobPostApp.Controller;
 import com.zero.JobPostApp.Entity.Company;
 import com.zero.JobPostApp.Entity.JobApplication;
 import com.zero.JobPostApp.Services.CompanyService;
-import com.zero.JobPostApp.impl.CompanyServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +17,27 @@ public class CompanyController {
     CompanyService companyService;
 
 
-    @GetMapping
-    public ResponseEntity<List<Company>> getAllCompany(){
-        List<Company> companyList = companyService.getAllCompany();
-        return new ResponseEntity<>(companyList, HttpStatus.FOUND);
-    }
-    @GetMapping("/job-forms/{companyId}")
-    public ResponseEntity<List<JobApplication>> getAllJobApplication(@PathVariable Long companyId){
-        return new ResponseEntity<>(companyService.getAllJobApplication(companyId),HttpStatus.FOUND);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Company>> getAllCompany(){
+//        List<Company> companyList = companyService.getAllCompany();
+//        return new ResponseEntity<>(companyList, HttpStatus.FOUND);
+//    }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable Long id){
-        if(companyService.getCompanyById(id)!=null){
-        return new ResponseEntity<>(companyService.getCompanyById(id),HttpStatus.FOUND);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+//    @GetMapping("/job-forms/{companyId}")
+//    public ResponseEntity<List<JobApplication>> getAllJobApplication(@PathVariable Long companyId){
+//        return new ResponseEntity<>(companyService.getAllJobApplication(companyId),HttpStatus.FOUND);
+//    }
+//
+//
+    //Get Company Data
+//    @GetMapping
+//    public ResponseEntity<Company> getCompanyData(){
+//
+//        if(companyService.getCompanyById()!=null){
+//        return new ResponseEntity<>(companyService.getCompanyById(),HttpStatus.FOUND);
+//        }
+//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    }
     @PostMapping
     public ResponseEntity<?> addCompany(@RequestBody Company company){
         companyService.addCompany(company);

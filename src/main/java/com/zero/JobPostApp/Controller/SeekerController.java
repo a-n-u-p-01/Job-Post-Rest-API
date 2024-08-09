@@ -7,28 +7,25 @@ import com.zero.JobPostApp.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/seeker")
+public class SeekerController {
     @Autowired
     private UserService userService;
     @Autowired
     private JobApplicationService jobApplicationService;
-    //Get All Users
+
+    //Get seeker data
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
-        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<User> getUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
     }
-    //Create User
-    @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user){
-        userService.createUser(user);
-        return new ResponseEntity<>("User Created",HttpStatus.CREATED);
-    }
+
     //Create Application
     @PostMapping("/{userId}/{jobId}/{companyId}")
     public ResponseEntity<?> applyForJob(@PathVariable Long userId, @PathVariable Long jobId, @PathVariable Long companyId, @RequestBody JobApplication jobApplication){

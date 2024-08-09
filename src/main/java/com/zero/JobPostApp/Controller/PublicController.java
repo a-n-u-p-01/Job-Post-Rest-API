@@ -1,14 +1,34 @@
 package com.zero.JobPostApp.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.zero.JobPostApp.Entity.User;
+import com.zero.JobPostApp.ServiceImpl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/public")
 public class PublicController {
+    @Autowired
+    UserServiceImpl userService;
     @GetMapping
     public String healthCheck(){
         return "Ok";
     }
+
+    //Create seeker
+    @PostMapping("/create-seeker")
+    public ResponseEntity<?> createSeeker(@RequestBody User user){
+        userService.createUser(user);
+        return new ResponseEntity<>("User Seeker Created", HttpStatus.CREATED);
+    }
+
+    //Create recruiter
+    @PostMapping("/create-recruiter")
+    public ResponseEntity<?> createRecruiter(@RequestBody User user){
+        userService.createRecruiter(user);
+        return new ResponseEntity<>("Recruiter Created", HttpStatus.CREATED);
+    }
+
 }

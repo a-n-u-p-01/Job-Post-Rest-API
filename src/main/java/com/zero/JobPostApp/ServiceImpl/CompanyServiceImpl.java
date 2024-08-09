@@ -1,20 +1,19 @@
-package com.zero.JobPostApp.impl;
+package com.zero.JobPostApp.ServiceImpl;
 
 import com.zero.JobPostApp.Entity.Company;
-import com.zero.JobPostApp.Entity.Job;
 import com.zero.JobPostApp.Entity.JobApplication;
 import com.zero.JobPostApp.Repository.CompanyRepository;
 import com.zero.JobPostApp.Repository.JobApplicationRepository;
 import com.zero.JobPostApp.Repository.JobRepository;
 import com.zero.JobPostApp.Services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -34,6 +33,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company getCompanyById(Long id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         return companyRepository.findById(id).orElse(null);
     }
 

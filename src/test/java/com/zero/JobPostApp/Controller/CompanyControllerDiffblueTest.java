@@ -4,7 +4,7 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zero.JobPostApp.Entity.Company;
-import com.zero.JobPostApp.impl.CompanyServiceImpl;
+import com.zero.JobPostApp.ServiceImpl.CompanyServiceImpl;
 
 import java.util.ArrayList;
 

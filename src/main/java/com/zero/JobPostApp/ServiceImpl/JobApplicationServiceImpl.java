@@ -1,4 +1,4 @@
-package com.zero.JobPostApp.impl;
+package com.zero.JobPostApp.ServiceImpl;
 
 import com.zero.JobPostApp.Entity.JobApplication;
 import com.zero.JobPostApp.Repository.JobApplicationRepository;

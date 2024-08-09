@@ -13,8 +13,6 @@ public interface CompanyService {
     boolean addCompany(Company company);
     boolean updateCompany(Company company,Long id);
     boolean deleteCompany(Long id);
-
     List<JobApplication> getAllJobApplication(Long companyId);
-
     void approveApplication(Long applicationId);
 }
