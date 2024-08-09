@@ -42,8 +42,10 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public boolean addCompany(Company company) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(company!=null){
-        companyRepository.save(company);
+            company.setManager(authentication.getName());
+            companyRepository.save(company);
         return true;
         }
         return false;
