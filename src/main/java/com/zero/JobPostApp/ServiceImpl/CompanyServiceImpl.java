@@ -2,9 +2,11 @@ package com.zero.JobPostApp.ServiceImpl;
 
 import com.zero.JobPostApp.Entity.Company;
 import com.zero.JobPostApp.Entity.JobApplication;
+import com.zero.JobPostApp.Entity.User;
 import com.zero.JobPostApp.Repository.CompanyRepository;
 import com.zero.JobPostApp.Repository.JobApplicationRepository;
 import com.zero.JobPostApp.Repository.JobRepository;
+import com.zero.JobPostApp.Repository.UserRepository;
 import com.zero.JobPostApp.Services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,11 +21,14 @@ import java.util.Optional;
 public class CompanyServiceImpl implements CompanyService {
 
     @Autowired
-    CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
     @Autowired
-    JobRepository jobRepository;
+    private UserRepository userRepository;
     @Autowired
-    JobApplicationRepository jobApplicationRepository;
+    private JobRepository jobRepository;
+    @Autowired
+    private JobApplicationRepository jobApplicationRepository;
+
 
 
     @Override
@@ -43,9 +48,13 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public boolean addCompany(Company company) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByUserName(authentication.getName());
         if(company!=null){
-            company.setManager(authentication.getName());
-            companyRepository.save(company);
+            company.setManager(user.getUserName());
+            Company company1 = companyRepository.save(company);
+            user.setCompanyId(company1.getId());
+            userRepository.save(user);
+//   ***  userRepository.save(user.setCompanyId(company1.getId())); // error because user.setCompanyId(company1.getId()) it return void
         return true;
         }
         return false;
@@ -70,14 +79,6 @@ public class CompanyServiceImpl implements CompanyService {
       return true;
     }
 
-    @Override
-    public List<JobApplication> getAllJobApplication(Long companyId) {
-        Optional<Company> optionalCompany = companyRepository.findById(companyId);
-        if(optionalCompany.isPresent()){
-            return optionalCompany.get().getJobApplicationList();
-        }
-        return Collections.emptyList();
-    }
 
     @Override
     public void approveApplication(Long applicationId) {

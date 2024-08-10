@@ -1,10 +1,14 @@
 package com.zero.JobPostApp.Controller;
 import com.zero.JobPostApp.Entity.Job;
 
+import com.zero.JobPostApp.ServiceImpl.UserServiceImpl;
 import com.zero.JobPostApp.Services.JobService;
+import com.zero.JobPostApp.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +20,8 @@ public class JobController {
 
     @Autowired
     JobService jobService;
+    @Autowired
+    private UserService userService;
 
 
     //GetAllJobs
@@ -31,24 +37,18 @@ public class JobController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    //get job by  company
-    @GetMapping("company/{id}")
-    public ResponseEntity<List<Job>> getJobByCompany(@PathVariable Long id){
-        if(!jobService.getJobByCompany(id).isEmpty()){
-            return new ResponseEntity<>(jobService.getJobByCompany(id),HttpStatus.FOUND);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
 
-    //Create Job
-    @PostMapping("/{companyId}")
-    public ResponseEntity<?> createJob(@RequestBody Job job,@PathVariable Long companyId){
+    //Create Job R 0
+    @PostMapping
+    public ResponseEntity<?> createJob(@RequestBody Job job){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long companyId = userService.getUser(authentication.getName()).getCompanyId();
         if(jobService.createJob(job,companyId)){
         return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-    //Update Job
+    //Update Job R
     @PutMapping("/{id}")
     public ResponseEntity<?> updateJob(@RequestBody Job job,@PathVariable Long id){
         if(jobService.updateJob(job,id)){
@@ -57,7 +57,7 @@ public class JobController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    //Delete Job
+    //Delete Job r
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteJobById(@PathVariable Long id){
     if(jobService.getJobById(id)!= null){

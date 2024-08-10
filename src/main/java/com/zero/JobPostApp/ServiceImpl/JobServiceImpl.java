@@ -1,11 +1,14 @@
 package com.zero.JobPostApp.ServiceImpl;
 import com.zero.JobPostApp.Entity.Company;
 import com.zero.JobPostApp.Entity.Job;
+import com.zero.JobPostApp.Entity.JobApplication;
 import com.zero.JobPostApp.Repository.CompanyRepository;
 import com.zero.JobPostApp.Repository.JobRepository;
 import com.zero.JobPostApp.Services.JobService;
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -29,15 +32,6 @@ public class JobServiceImpl implements JobService {
     public Job getJobById(Long id){
         return jobRepository.findById(id).orElse(null);
     }
-    //get by company
-    @Override
-    public List<Job> getJobByCompany(Long id) {
-        Optional<Company> optionalCompany = companyRepository.findById(id);
-        if(optionalCompany.isPresent()){
-            return optionalCompany.get().getJobs();
-        }
-        return Collections.emptyList();
-    }
 
 
     //delete by id
@@ -57,7 +51,6 @@ public class JobServiceImpl implements JobService {
         return false;
     }
 
-
     //Create job
     @Override
     public boolean createJob(Job job, Long companyId){
@@ -71,4 +64,11 @@ public class JobServiceImpl implements JobService {
         }
         return false;
     }
+
+    //Get all applications
+    @Override
+    public List<JobApplication> getAllJobApplication(Long jobId) {
+        return List.of();
+    }
+
 }

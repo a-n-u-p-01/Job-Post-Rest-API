@@ -24,8 +24,7 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(request -> request
                                 .requestMatchers("/public/**","/h2-console/**").permitAll()
                                 .requestMatchers("/seeker/**").hasRole("SEEKER")
-                                .requestMatchers("/recruiter/**").hasRole("RECRUITER")
-                                .requestMatchers("/company/**").hasRole("RECRUITER")
+                                .requestMatchers("/recruiter/**","/company/**","/job/**").hasRole("RECRUITER")
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractHttpConfigurer::disable);

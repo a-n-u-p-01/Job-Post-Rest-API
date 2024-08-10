@@ -27,7 +27,5 @@ public class Company {
     @JsonIgnore
     @OneToMany(mappedBy = "companyId")
     private List<Review> reviews;
-    @JsonIgnore
-    @OneToMany(mappedBy = "companyId")
-    private List<JobApplication> jobApplicationList;
+
 }

@@ -12,19 +12,20 @@ import org.springframework.web.bind.annotation.*;
 public class PublicController {
     @Autowired
     UserServiceImpl userService;
+    //health 0
     @GetMapping
     public String healthCheck(){
         return "Ok";
     }
 
-    //Create seeker
+    //Create seeker 0
     @PostMapping("/create-seeker")
     public ResponseEntity<?> createSeeker(@RequestBody User user){
         userService.createUser(user);
         return new ResponseEntity<>("User Seeker Created", HttpStatus.CREATED);
     }
 
-    //Create recruiter
+    //Create recruiter 0
     @PostMapping("/create-recruiter")
     public ResponseEntity<?> createRecruiter(@RequestBody User user){
         userService.createRecruiter(user);

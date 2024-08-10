@@ -17,7 +17,7 @@ public class RecruiterController {
     @Autowired
     UserServiceImpl userService;
 
-    //Get Recruiter Data
+    //Get Recruiter Data 0
     @GetMapping
     public ResponseEntity<User> getRecruiter(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -22,4 +22,5 @@ public class User {
     private String contact;
     private String resume;
     private List<String> roles;
+    private Long companyId;
 }

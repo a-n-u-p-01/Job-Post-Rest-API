@@ -1,7 +1,10 @@
 package com.zero.JobPostApp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 
 @Entity
@@ -17,4 +20,7 @@ public class Job {
     private String location;
     @ManyToOne
     private Company company;
+    @JsonIgnore
+    @OneToMany(mappedBy = "jobId")
+    private List<JobApplication> jobApplicationList;
 }

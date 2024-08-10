@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface JobApplicationService {
-    void createJobApplication(Long userId, Long jobId, Long companyId, JobApplication jobApplication);
+    void createJobApplication(Long useId, Long jobId,JobApplication jobApplication);
 }

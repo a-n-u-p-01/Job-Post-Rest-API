@@ -1,6 +1,7 @@
 package com.zero.JobPostApp.Services;
 
 import com.zero.JobPostApp.Entity.Job;
+import com.zero.JobPostApp.Entity.JobApplication;
 import org.springframework.stereotype.Repository;
 
 
@@ -12,5 +13,5 @@ public interface JobService {
     Job getJobById(Long id);
     void deleteJobById(Long id);
     boolean updateJob(Job job, Long id);
-    List<Job> getJobByCompany(Long id);
+    List<JobApplication> getAllJobApplication(Long jobId);
 }

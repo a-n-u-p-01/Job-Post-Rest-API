@@ -14,7 +14,9 @@ public class JobApplication {
     private Long userId;
     @Column(nullable = false)
     private Long jobId;
-    @Column(nullable = false)
-    private Long companyId;
 
+    private String applicantName;
+    private String jobRole;
+    private String skills;
+    private String experience;
 }

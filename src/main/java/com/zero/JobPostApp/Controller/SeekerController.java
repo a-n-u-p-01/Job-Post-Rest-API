@@ -19,17 +19,19 @@ public class SeekerController {
     @Autowired
     private JobApplicationService jobApplicationService;
 
-    //Get seeker data
+    //Get seeker data 0
     @GetMapping
     public ResponseEntity<User> getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return new ResponseEntity<>(userService.getUser(authentication.getName()),HttpStatus.OK);
     }
 
-    //Create Application
-    @PostMapping("/{userId}/{jobId}/{companyId}")
-    public ResponseEntity<?> applyForJob(@PathVariable Long userId, @PathVariable Long jobId, @PathVariable Long companyId, @RequestBody JobApplication jobApplication){
-        jobApplicationService.createJobApplication(userId,jobId,companyId,jobApplication);
+    //Create Application for jobs 0
+    @PostMapping("/{jobId}")
+    public ResponseEntity<?> applyForJob(@PathVariable Long jobId,@RequestBody JobApplication jobApplication){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Long userId = userService.getUser(authentication.getName()).getId();
+        jobApplicationService.createJobApplication(userId,jobId,jobApplication);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
